@@ -1,0 +1,23 @@
+{
+  "name": "rick-and-morty",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "core-js": "^3.21.1",
+    "source-map-resolve": "^0.6.0",
+    "vue": "^3.2.31",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^5.0.1",
+    "@vue/cli-plugin-vuex": "~5.0.1",
+    "@vue/cli-service": "^5.0.1",
+    "@vue/compiler-sfc": "^3.2.31",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0"
+  }
+}
