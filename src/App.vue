@@ -1,4 +1,4 @@
-<template>
+<template v-once>
   <div class="container">
     <h1>Rick &amp; Morty</h1>
     <FilterByStatus />
