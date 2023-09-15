@@ -1,5 +1,7 @@
 import { createStore } from "vuex";
 
+const URL = "https://rickandmortyapi.com/api/character";
+
 export default createStore({
   state: {
     characters: Array,
@@ -35,37 +37,55 @@ export default createStore({
           commit("setCharactersFilter", results);
           commit("setNext", info.next);
           commit("setPrev", info.prev);
-        } else {
-          const response = await fetch(
-            "https://rickandmortyapi.com/api/character"
-          );
-          const data = await response.json();
-          commit("setCharacters", data.results);
-          commit("setCharactersFilter", data.results);
-          commit("setNext", data.info.next);
         }
+        const response = await fetch(`${URL}`);
+        const { results, info } = await response.json();
+        commit("setCharacters", results);
+        commit("setCharactersFilter", results);
+        commit("setNext", info.next);
       } catch (error) {
         console.log(error);
       }
     },
+
     async getAllDataPerson({ commit }, idPerson) {
       try {
-        const res = await fetch(
-          `https://rickandmortyapi.com/api/character/${idPerson}`
-        );
+        const res = await fetch(`${URL}/${idPerson}`);
         const data = await res.json();
         commit("setDataPerson", data);
       } catch (error) {
         alert("error on get data person: ", error);
       }
     },
+
     filterByStatus({ commit, state }, status) {
       const results = state.characters.filter((character) => {
         return character.status.includes(status);
       });
       commit("setCharactersFilter", results);
     },
-    filterByName({ commit, state }, name) {
+
+    async filterByName({ commit, state }, name) {
+      if (!name) {
+        return;
+      }
+
+      //?name=rick&status=alive
+      const res = await fetch(`${URL}/?name=${name.toLowerCase()}`)
+        .then((res) => res.json())
+        .then(({ results, info }) => {
+          commit("setCharactersFilter", results);
+          if (info.next) {
+            commit("setNext", info.next);
+          }
+          if (info.prev) {
+            commit("setPrev", info.prev);
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+
+    filterByNameLocal({ commit, state }, name) {
       const formatName = name.toLowerCase();
       const results = state.characters.filter((character) => {
         const characterName = character.name.toLowerCase();
@@ -76,5 +96,4 @@ export default createStore({
       commit("setCharactersFilter", results);
     },
   },
-  modules: {},
 });

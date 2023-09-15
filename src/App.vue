@@ -9,7 +9,6 @@
 </template>
 
 <script>
-require('@/assets/adas.png')
 import ListCharacters from "@/components/ListCharacters";
 import FilterByStatus from "@/components/FilterByStatus";
 import FilterByName from '@/components/FilterByName.vue';
@@ -61,4 +60,5 @@ h1 {
 
 img {
   width: 100%;
-}</style>
+}
+</style>
