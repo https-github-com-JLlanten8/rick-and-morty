@@ -33,29 +33,32 @@ export default {
   --text-gray: #c0c0c0;
   --text-orange: #ff9800;
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 body {
   background-color: var(--background-body);
-  background-image:url('~@/assets/adas.png');
   background-size: contain;
   backdrop-filter: initial;
   color: var(--text-white);
   font-family: "segoe UI", Verdana, Geneva, Tahoma, sans-serif;
 }
+
 h1 {
   margin-bottom: 2rem;
   text-align: center;
 }
+
 .container {
   width: 980px;
   max-width: 90%;
   margin: 2rem auto;
 }
+
 img {
   width: 100%;
-}
-</style>
+}</style>

@@ -1,10 +1,10 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 
 export default createStore({
   state: {
     characters: Array,
     charactersFilter: Array,
-    prev: '',
+    prev: "",
     next: String,
     person: Object,
   },
@@ -30,17 +30,19 @@ export default createStore({
       try {
         if (page) {
           const response = await fetch(page);
-          const data = await response.json();
-          commit('setCharacters', data.results);
-          commit('setCharactersFilter', data.results);
-          commit('setNext', data.info.next);
-          commit('setPrev', data.info.prev);
+          const { results, info } = await response.json();
+          commit("setCharacters", results);
+          commit("setCharactersFilter", results);
+          commit("setNext", info.next);
+          commit("setPrev", info.prev);
         } else {
-          const response = await fetch('https://rickandmortyapi.com/api/character');
+          const response = await fetch(
+            "https://rickandmortyapi.com/api/character"
+          );
           const data = await response.json();
-          commit('setCharacters', data.results);
-          commit('setCharactersFilter', data.results);
-          commit('setNext', data.info.next);
+          commit("setCharacters", data.results);
+          commit("setCharactersFilter", data.results);
+          commit("setNext", data.info.next);
         }
       } catch (error) {
         console.log(error);
@@ -48,18 +50,20 @@ export default createStore({
     },
     async getAllDataPerson({ commit }, idPerson) {
       try {
-        const res = await fetch(`https://rickandmortyapi.com/api/character/${idPerson}`)
+        const res = await fetch(
+          `https://rickandmortyapi.com/api/character/${idPerson}`
+        );
         const data = await res.json();
-        commit('setDataPerson', data);
+        commit("setDataPerson", data);
       } catch (error) {
-        alert('error on get data person: ', error);
+        alert("error on get data person: ", error);
       }
     },
     filterByStatus({ commit, state }, status) {
       const results = state.characters.filter((character) => {
         return character.status.includes(status);
       });
-      commit('setCharactersFilter', results);
+      commit("setCharactersFilter", results);
     },
     filterByName({ commit, state }, name) {
       const formatName = name.toLowerCase();
@@ -67,13 +71,10 @@ export default createStore({
         const characterName = character.name.toLowerCase();
         if (characterName.includes(formatName)) {
           return character;
-        };
+        }
       });
-      commit('setCharactersFilter', results);
+      commit("setCharactersFilter", results);
     },
-
   },
-  modules: {
-  }
-})
-
+  modules: {},
+});
