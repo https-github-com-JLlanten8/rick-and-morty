@@ -37,12 +37,13 @@ export default createStore({
           commit("setCharactersFilter", results);
           commit("setNext", info.next);
           commit("setPrev", info.prev);
+        } else {
+          const response = await fetch(`${URL}`);
+          const { results, info } = await response.json();
+          commit("setCharacters", results);
+          commit("setCharactersFilter", results);
+          commit("setNext", info.next);
         }
-        const response = await fetch(`${URL}`);
-        const { results, info } = await response.json();
-        commit("setCharacters", results);
-        commit("setCharactersFilter", results);
-        commit("setNext", info.next);
       } catch (error) {
         commit("setCharactersFilter", []);
         commit("setNext", "");
