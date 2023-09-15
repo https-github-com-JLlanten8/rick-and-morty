@@ -44,7 +44,9 @@ export default createStore({
         commit("setCharactersFilter", results);
         commit("setNext", info.next);
       } catch (error) {
-        console.log(error);
+        commit("setCharactersFilter", []);
+        commit("setNext", "");
+        commit("setPrev", "");
       }
     },
 
@@ -82,7 +84,11 @@ export default createStore({
             commit("setPrev", info.prev);
           }
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          commit("setCharactersFilter", []);
+          commit("setNext", "");
+          commit("setPrev", "");
+        });
     },
 
     filterByNameLocal({ commit, state }, name) {

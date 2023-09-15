@@ -4,15 +4,12 @@
     <div class="character__info">
       <h2>{{ character.name }}</h2>
       <div class="status">
-        <span
-          :class="
-            character.status == 'Alive'
-              ? 'alive'
-              : character.status == 'Dead'
-                ? 'dead'
-                : 'default'
-          "
-        ></span>
+        <span :class="character.status == 'Alive'
+          ? 'alive'
+          : character.status == 'Dead'
+            ? 'dead'
+            : 'default'
+          "></span>
         <span>{{ character.status }} - {{ character.species }}</span>
       </div>
       <div class="origin">
@@ -24,11 +21,11 @@
   <ModalCharacter :modal="modal" @closeM="closeM" />
 </template>
 <script>
-import ModalCharacter from "@/components/ModalCharacter";
+import ModalCharacter from "@/components/ModalCharacter.vue";
 import { ref } from 'vue'
 import { useStore } from "vuex";
 export default {
-  name: 'Card',
+  name: 'CardCharacter',
   props: ["character"],
 
   setup(props) {
@@ -64,27 +61,34 @@ export default {
   transition: transform 200ms ease-in-out;
   height: 100%;
   scroll-behavior: auto;
-  &:hover{
+
+  &:hover {
     transform: scale(1.05);
+
     h3 {
       color: var(--text-orange);
     }
   }
+
   span {
     color: var(--text-gray);
   }
+
   h2 {
     margin-bottom: 0.5rem;
   }
 
   &__info {
     padding: 1.5rem;
+
     .status {
       display: flex;
       align-items: center;
       margin-bottom: 0.5rem;
+
       span {
         color: var(--text-gray);
+
         &:first-child {
           width: 10px;
           height: 10px;
@@ -93,16 +97,20 @@ export default {
         }
       }
     }
+
     .alive {
       background-color: green;
     }
+
     .dead {
       background-color: red;
     }
+
     .default {
       background-color: white;
     }
   }
+
   .origen {
     margin-bottom: 0.5rem;
   }

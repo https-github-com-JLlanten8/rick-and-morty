@@ -9,10 +9,7 @@
 </template>
 
 <script>
-import ListCharacters from "@/components/ListCharacters";
-import FilterByStatus from "@/components/FilterByStatus";
-import FilterByName from '@/components/FilterByName.vue';
-import Pagination from '@/components/Pagination.vue';
+import { ListCharacters, FilterByStatus, FilterByName, Pagination } from "@components";
 export default {
   name: "App",
   components: {

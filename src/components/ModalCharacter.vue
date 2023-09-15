@@ -1,12 +1,6 @@
 <template>
   <!-- TODO:TEMINAR LA MODAL RECURRIENDO ALA API https://rickandmortyapi.com/api/character/2-->
-  <article
-    class="modal-container"
-    @keyup.esc="closeModal"
-    tabindex="0"
-    @click.self="closeModal"
-    v-if="modal"
-  >
+  <article class="modal-container" @keyup.esc="closeModal" tabindex="0" @click.self="closeModal" v-if="modal">
     <section class="modal" v-if="Object.keys(person).length > 0">
       <figure>
         <img :src="person.image" :alt="person.name" />
@@ -42,6 +36,7 @@
 import { computed } from 'vue'
 import { useStore } from "vuex";
 export default {
+  name: "ModalCharacter",
   props: {
     modal: Boolean,
   },
@@ -70,6 +65,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .modal {
   width: 90%;
   max-height: 85%;
@@ -79,9 +75,11 @@ export default {
   border-radius: 20px;
   color: whitesmoke;
   display: flex;
+
   &-text {
     width: 100%;
     margin: 1% 0 2% 2%;
+
     button {
       width: 4%;
       height: 5%;
@@ -93,26 +91,32 @@ export default {
       border: none;
       border-radius: 10px;
       background: transparent;
+
       &:hover {
         cursor: pointer;
         background: linear-gradient(43deg, #4158d0, #c850c0 46%, #ffcc70 100%);
       }
+
       &alt {
         background-color: transparent;
       }
     }
+
     h2 {
       margin-top: 1rem;
     }
   }
 }
+
 figure {
   margin: 0;
+
   img {
     height: 100%;
     border-radius: 20px;
   }
 }
+
 .tooltip {
   .tooltiptext {
     width: 120px;
@@ -126,6 +130,7 @@ figure {
     margin-left: -60px;
     opacity: 0;
     transition: opacity 0.5s;
+
     &::after {
       content: "";
       position: absolute;
@@ -138,6 +143,7 @@ figure {
       transform: rotate(0.5turn);
     }
   }
+
   &:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
