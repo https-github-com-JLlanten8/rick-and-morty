@@ -13,8 +13,6 @@ cd dist
 git add -A
 git commit -m 'deploy'
 
-ssh -T git@github.com
-
 # si está usando https://<USERNAME>.github.io/<REPO>
 git push -f https://github.com/https-github-com-JLlanten8/rick-and-morty.git master:gh-pages
 
