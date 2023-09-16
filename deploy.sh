@@ -2,7 +2,7 @@
 cowsay -f tux "Deploying to Github Pages"
 
 # aborta en caso de errores
-set -e
+#set -e
 
 # construye
 npm run build
