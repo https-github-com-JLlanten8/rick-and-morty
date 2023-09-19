@@ -4,25 +4,38 @@
       <div class="characters__item" v-for="character in characters" :key="character.id">
         <CardCharacter :character="character" />
       </div>
+      <div class="characters__item" v-for="repeat in 9" :key="repeat" v-if="isLoading">
+        <CardLoading />
+      </div>
     </div>
   </section>
   <ModalCharacter />
 </template>
 <script>
-import { CardCharacter, ModalCharacter } from "@components";
-import { onMounted, computed } from "vue";
+import { CardCharacter, CardLoading, ModalCharacter } from "@components";
+import { onMounted, computed, ref } from "vue";
 import { useStore } from "vuex";
 
 export default {
   components: {
     CardCharacter,
     ModalCharacter,
+    CardLoading
   },
 
   setup() {
     const store = useStore();
+
     const characters = computed(() => {
       return store.state.charactersFilter;
+    });
+
+    const isLoading = computed(() => {
+      if (store.state.isLoading > 0) {
+        return false;
+      } else {
+        return true;
+      }
     });
 
     onMounted(() => {

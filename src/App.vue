@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { onMounted } from "vue";
+import { useStore } from "vuex";
 import { ListCharacters, FilterByStatus, FilterByName, Pagination } from "@components";
 export default {
   name: "App",
@@ -17,6 +19,12 @@ export default {
     FilterByStatus,
     FilterByName,
     Pagination,
+  },
+  setup() {
+    const store = useStore();
+    onMounted(() => {
+      store.dispatch("getCharacters");
+    });
   },
 };
 </script>

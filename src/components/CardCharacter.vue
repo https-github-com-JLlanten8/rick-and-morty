@@ -1,5 +1,6 @@
 <template>
-  <div class="character" @click="open(true)">
+  <TransitionGroup tag="ul" :css="false" @mouseover="hoverEffect" @mouseleave="" @before-enter="onBeforeEnter" @enter="onEnter"
+    @leave="onLeave" class="character" @click="open(true)">
     <img width="100%" loading="auto" :src="character.image" :alt="character.name" />
     <div class="character__info">
       <h2>{{ character.name }}</h2>
@@ -17,13 +18,16 @@
       </div>
       <div class="location">location: {{ character.location.name }}</div>
     </div>
-  </div>
+  </TransitionGroup>
   <ModalCharacter :modal="modal" @closeM="closeM" />
 </template>
 <script>
+import gsap from 'gsap'
 import ModalCharacter from "@/components/ModalCharacter.vue";
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from "vuex";
+
+
 export default {
   name: 'CardCharacter',
   props: ["character"],
@@ -31,18 +35,67 @@ export default {
   setup(props) {
     const store = useStore();
     const modal = ref(false);
+
+    const hoverEffect = (el) => {
+      const height = el.target.clientHeight;
+      const width = el.target.clientWidth;
+
+      console.log(el.clientX, el.clientY);
+      const { clientX, clientY } = el;
+
+      const yRotation = (
+        (clientX, clientY / 2) / width
+      ) * 20;
+
+      const xRotation = (
+        (clientY, clientX / 2) / height
+      ) * 20;
+
+      const string = `
+        perspective(500px) 
+        scale(1.1) 
+        rotateX(${xRotation}deg) 
+        rotateY(${yRotation}deg)
+      `;
+
+      el.target.style.transform = string;
+
+    }
+
+    onMounted(() => {
+      const done = () => {
+        gsap.set('.character', {
+          clearProps: 'all'
+        })
+      }
+
+      gsap.from('.character', {
+        opacity: 0,
+      });
+
+      gsap.to('.character', {
+        opacity: 1,
+        height: '14em',
+        delay: 0.8,
+        onComplete: done
+      });
+    })
+
     const open = (data) => {
       const id = props.character.id;
       store.dispatch("getAllDataPerson", id);
       modal.value = data;
     };
+
     const closeM = (data) => {
       modal.value = data;
     };
+
     return {
       modal,
       open,
       closeM,
+      hoverEffect
     }
   },
   components: {
@@ -64,8 +117,9 @@ export default {
 
   &:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 50px 1px var(--text-orange);
 
-    h3 {
+    h2 {
       color: var(--text-orange);
     }
   }

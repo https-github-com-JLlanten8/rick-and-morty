@@ -9,6 +9,7 @@ export default createStore({
     prev: "",
     next: String,
     person: Object,
+    isLoading: Boolean,
   },
   mutations: {
     setCharacters(state, payload) {
@@ -31,6 +32,7 @@ export default createStore({
     async getCharacters({ commit }, page) {
       try {
         if (page) {
+          commit("isLoading", true);
           const response = await fetch(page);
           const { results, info } = await response.json();
           commit("setCharacters", results);
@@ -44,6 +46,7 @@ export default createStore({
           commit("setCharactersFilter", results);
           commit("setNext", info.next);
         }
+        commit("isLoading", false);
       } catch (error) {
         commit("setCharactersFilter", []);
         commit("setNext", "");
@@ -53,9 +56,11 @@ export default createStore({
 
     async getAllDataPerson({ commit }, idPerson) {
       try {
+        commit("isLoading", true);
         const res = await fetch(`${URL}/${idPerson}`);
         const data = await res.json();
         commit("setDataPerson", data);
+        commit("isLoading", false);
       } catch (error) {
         alert("error on get data person: ", error);
       }
@@ -72,7 +77,7 @@ export default createStore({
       if (!name) {
         return;
       }
-
+      commit("isLoading", true);
       //?name=rick&status=alive
       const res = await fetch(`${URL}/?name=${name.toLowerCase()}`)
         .then((res) => res.json())
@@ -89,6 +94,9 @@ export default createStore({
           commit("setCharactersFilter", []);
           commit("setNext", "");
           commit("setPrev", "");
+        })
+        .finally(() => {
+          commit("isLoading", false);
         });
     },
 
