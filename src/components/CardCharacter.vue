@@ -1,23 +1,26 @@
 <template>
-  <figure class="character" @click="open(true)">
-    <img width="100%" loading="auto" :src="character.image" :alt="character.name" />
-    <div class="character__info">
-      <h2>{{ character.name }}</h2>
-      <div class="status">
-        <span :class="character.status == 'Alive'
-          ? 'alive'
-          : character.status == 'Dead'
-            ? 'dead'
-            : 'default'
-          "></span>
-        <span>{{ character.status }} - {{ character.species }}</span>
+  <Transition name="fadeIn" mode="out-in" class="character" @click="open(true)">
+    <div>
+      <img width="100%" loading="auto" :src="character.image" :alt="character.name" />
+      <div class="character__info">
+        <h2>{{ character.name }}</h2>
+        <div class="status">
+          <span :class="character.status == 'Alive'
+            ? 'alive'
+            : character.status == 'Dead'
+              ? 'dead'
+              : 'default'
+            "></span>
+          <span>{{ character.status }} - {{ character.species }}</span>
+        </div>
+        <div class="origin">
+          <span>origin : {{ character.origin.name }}</span>
+        </div>
+        <div class="location">location: {{ character.location.name }}</div>
       </div>
-      <div class="origin">
-        <span>origin : {{ character.origin.name }}</span>
-      </div>
-      <div class="location">location: {{ character.location.name }}</div>
     </div>
-  </figure>
+  </transition>
+
   <ModalCharacter :modal="modal" @closeM="closeM" />
 </template>
 <script>
@@ -58,6 +61,17 @@ export default {
 </script>
 
 <style lang="scss">
+.fadeIn-enter-active,
+.fadeIn-leave-active {
+  transition: opacity 0.5s ease;
+
+}
+
+.fadeIn-enter-from,
+.fadeIn-leave-to {
+  opacity: 0;
+}
+
 .character {
   background-color: var(--background-card);
   border-radius: 20px;
